@@ -108,6 +108,8 @@ const Banks = () => {
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [page, setPage] = React.useState(0);
+	const [total, setTotal] = useState(0);
+	const [filteredPage, setFilteredPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
 	const [city, setCity] = useState("MUMBAI");
 	const [category, setCategory] = useState("");
@@ -133,16 +135,14 @@ const Banks = () => {
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
 	};
-
+	const handleFilterPage = (event, newPage) => {
+		setFilter(newPage);
+	};
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(+event.target.value);
 		setPage(0);
 	};
 
-	const handleSearchChange = (event) => {
-		setSearchValue(event.target.value);
-		console.log(searchValue);
-	};
 	const handleFavourite = (props) => {
 		let fav = favorite;
 		let addFav = true;
@@ -172,6 +172,10 @@ const Banks = () => {
 	useEffect(() => {
 		fetchData();
 	}, [city]);
+
+	useEffect(() => {
+		totalPages();
+	}, [searchValue, loading, city]);
 
 	const fetchData = async () => {
 		try {
@@ -217,6 +221,16 @@ const Banks = () => {
 		}
 	};
 
+	const totalPages = () => {
+		if (filter?.length > 1) {
+			setTotal(filter?.length);
+			console.log("de");
+		} else {
+			setTotal(banks?.response?.length);
+			console.log("banks");
+			console.log(total);
+		}
+	};
 	const searchItems = (searchInput) => {
 		setSearchValue(searchInput);
 		console.log(searchValue);
@@ -323,7 +337,7 @@ const Banks = () => {
 								{searchValue.length > 1 ? (
 									<TableBody>
 										{filter
-											.slice(
+											?.slice(
 												page * rowsPerPage,
 												page * rowsPerPage + rowsPerPage
 											)
@@ -437,7 +451,7 @@ const Banks = () => {
 					<TablePagination
 						rowsPerPageOptions={[10, 25, 100, { value: -1, label: "All" }]}
 						component="div"
-						count={banks?.response?.length ?? 0}
+						count={total ?? 0}
 						rowsPerPage={rowsPerPage}
 						page={page}
 						onPageChange={handleChangePage}
