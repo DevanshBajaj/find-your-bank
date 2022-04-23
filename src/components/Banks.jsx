@@ -21,11 +21,13 @@ import {
 	InputAdornment,
 	Input,
 	Skeleton,
+	Checkbox,
 } from "@mui/material";
 import { Category, Search, TableBar } from "@mui/icons-material";
+import BookmarkIcon from "@mui/icons-material/Bookmark";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import { debounce } from "lodash";
 
 const columns = [
 	{ id: "bank_name", label: "Bank Name", minWidth: 120 },
@@ -73,6 +75,11 @@ const NavContainer = styled("div")`
 	justify-content: flex-end;
 	gap: 2rem;
 	margin: 2rem;
+	@media (min-width: "600px") {
+		flex-direction: column;
+		align-items: center;
+		max-width: 50%;
+	}
 `;
 const CssTextField = styled(TextField)({
 	"& label.Mui-focused": {
@@ -97,17 +104,25 @@ const categories = ["ifsc", "branch", "bank_name"];
 const Banks = () => {
 	const [banks, setBanks] = useState([]);
 	const [filter, setFilter] = useState([]);
+	const [searchValue, setSearchValue] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
 	const [page, setPage] = React.useState(0);
 	const [rowsPerPage, setRowsPerPage] = React.useState(10);
-	const [searchValue, setSearchValue] = useState("");
 	const [city, setCity] = useState("MUMBAI");
 	const [category, setCategory] = useState("");
 	const [disableSearch, setDisableSearch] = useState(true);
+	const [favorite, setFavourite] = useState([]);
 
+	const getArray = JSON.parse(localStorage.getItem("favorites") || "0");
 	let navigate = useNavigate();
 
+	useEffect(() => {
+		if (getArray !== 0) {
+			setFavourite([...getArray]);
+			console.log(getArray);
+		}
+	}, []);
 	const handleCity = (event) => {
 		setCity(event.target.value);
 	};
@@ -128,6 +143,28 @@ const Banks = () => {
 		setSearchValue(event.target.value);
 		console.log(searchValue);
 	};
+	const handleFavourite = (props) => {
+		let fav = favorite;
+		let addFav = true;
+		fav.map((item, key) => {
+			if (item === props.i) {
+				fav.splice(key, 1);
+				addFav = false;
+			}
+		});
+		if (addFav) {
+			fav.push(props.i);
+		}
+		setFavourite([...fav]);
+		localStorage.setItem("favorites", JSON.stringify(favorite));
+		let storage = localStorage.getItem("favItem" + props.i || "0");
+		if (storage == null) {
+			localStorage.setItem("favItem" + props.i, JSON.stringify(props.bank));
+		} else {
+			localStorage.removeItem("favItem" + props.i);
+		}
+	};
+
 	useEffect(() => {
 		setDisableSearch(!category);
 	}, [category]);
@@ -169,9 +206,28 @@ const Banks = () => {
 				setFilter(localdata);
 				console.log("cache");
 			}
+			// let filteredBanks = banks?.response
+			// 	.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+			// 	.filter((bank) => bank[category]?.toLowerCase().includes("abh"));
+			// console.log(filteredBanks);
 			setLoading(false);
 		} catch (e) {
 			setError(true);
+			console.log(e);
+		}
+	};
+
+	const searchItems = (searchInput) => {
+		setSearchValue(searchInput);
+		console.log(searchValue);
+		if (searchValue !== "" && category !== "") {
+			const filteredData = banks?.response.filter((bank) =>
+				bank[category].toLowerCase().includes(searchValue.toLowerCase())
+			);
+			setFilter(filteredData);
+			console.log(filter);
+		} else {
+			setFilter(banks);
 		}
 	};
 
@@ -218,15 +274,15 @@ const Banks = () => {
 						),
 					}}
 					disabled={disableSearch}
-					onChange={handleSearchChange}
+					onChange={(e) => searchItems(e.target.value)}
 				/>
 			</NavContainer>
 
 			<div>
-				<Paper sx={{ width: "100%", overflow: "auto" }}>
+				<Paper sx={{ width: "100%", overflow: "scroll" }}>
 					<TableContainer
 						sx={{
-							overflowX: "auto",
+							overflowX: "scroll",
 							maxHeight: 600,
 							"&::-webkit-scrollbar": {
 								width: 8,
@@ -252,6 +308,7 @@ const Banks = () => {
 							<Table stickyHeader aria-label="sticky table">
 								<TableHead>
 									<TableRow>
+										<TableCell>Favorites</TableCell>
 										{columns.map((column) => (
 											<TableCell
 												key={column.id}
@@ -263,39 +320,105 @@ const Banks = () => {
 										))}
 									</TableRow>
 								</TableHead>
-
-								<TableBody>
-									{banks.response
-										.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-										.map((bank, idx) => {
-											return (
-												<TableRow key={idx}>
-													{columns.map((column) => {
-														return (
-															<TableCell
-																onClick={() => {
-																	navigate(`/bank-details/${bank.ifsc}`, {
-																		state: {
-																			ifsc: bank.ifsc,
-																			bank_id: bank.bank_id,
-																			branch: bank.branch,
-																			address: bank.address,
-																			city: bank.city,
-																			district: bank.district,
-																			bank_state: bank.state,
-																			name: bank.bank_name,
-																		},
-																	});
-																}}
-															>
-																{bank[column.id]}
-															</TableCell>
-														);
-													})}
-												</TableRow>
-											);
-										})}
-								</TableBody>
+								{searchValue.length > 1 ? (
+									<TableBody>
+										{filter
+											.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+											.map((bank, i) => {
+												return (
+													<TableRow key={i} hover tabIndex={-1}>
+														<TableCell padding="checkbox">
+															{favorite?.includes(i) ? (
+																<BookmarkIcon
+																	color="primary"
+																	onClick={() => handleFavourite({ bank, i })}
+																/>
+															) : (
+																<BookmarkBorderIcon
+																	color="primary"
+																	onClick={() => handleFavourite({ bank, i })}
+																/>
+															)}
+														</TableCell>
+														{columns.map((column) => {
+															return (
+																<TableCell
+																	onClick={() => {
+																		navigate(`/bank-details/${bank.ifsc}`, {
+																			state: {
+																				ifsc: bank.ifsc,
+																				bank_id: bank.bank_id,
+																				branch: bank.branch,
+																				address: bank.address,
+																				city: bank.city,
+																				district: bank.district,
+																				bank_state: bank.state,
+																				name: bank.bank_name,
+																			},
+																		});
+																	}}
+																>
+																	{bank[column.id]}
+																</TableCell>
+															);
+														})}
+													</TableRow>
+												);
+											})}
+									</TableBody>
+								) : (
+									<TableBody>
+										{banks.response
+											.slice(
+												page * rowsPerPage,
+												page * rowsPerPage + rowsPerPage
+											)
+											.map((bank, i) => {
+												return (
+													<TableRow key={i} hover tabIndex={-1}>
+														<TableCell padding="checkbox">
+															{favorite?.includes(i) ? (
+																<BookmarkIcon
+																	color="primary"
+																	onClick={() => handleFavourite({ bank, i })}
+																/>
+															) : (
+																<BookmarkBorderIcon
+																	color="primary"
+																	onClick={() => handleFavourite({ bank, i })}
+																/>
+															)}
+														</TableCell>
+														{columns.map((column) => {
+															return (
+																<TableCell
+																	onClick={() => {
+																		navigate(`/bank-details/${bank.ifsc}`, {
+																			state: {
+																				ifsc: bank.ifsc,
+																				bank_id: bank.bank_id,
+																				branch: bank.branch,
+																				address: bank.address,
+																				city: bank.city,
+																				district: bank.district,
+																				bank_state: bank.state,
+																				name: bank.bank_name,
+																			},
+																		});
+																	}}
+																>
+																	{bank[column.id]}
+																</TableCell>
+															);
+														})}
+													</TableRow>
+												);
+											})}
+									</TableBody>
+								)}
 							</Table>
 						) : (
 							<div style={{ margin: "2rem" }}>
