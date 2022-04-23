@@ -17,6 +17,7 @@ import { Route, Routes, useLocation, NavLink } from "react-router-dom";
 import Banks from "./Banks";
 import Favourites from "./Favourites";
 import BankDetails from "./BankDetails";
+import Home from "./Home";
 
 const drawerWidth = 240;
 function Sidebar(props) {
@@ -38,7 +39,7 @@ function Sidebar(props) {
 			setTitle("Favorites");
 		} else if (location.pathname.includes("/bank-details")) {
 			setTitle("Bank Details");
-		} else setTitle("Home");
+		} else setTitle("Find your Bankk");
 	};
 	let activeStyle = {
 		textDecoration: "underline",
@@ -48,7 +49,17 @@ function Sidebar(props) {
 	const drawer = (
 		<div>
 			<Toolbar />
-			<Divider />
+			<List>
+				<NavLink
+					style={({ isActive }) =>
+						isActive ? activeStyle : { color: "#5367FF" }
+					}
+					to="/"
+					exact
+				>
+					Home
+				</NavLink>
+			</List>
 			<List>
 				<NavLink
 					style={({ isActive }) =>
@@ -60,7 +71,6 @@ function Sidebar(props) {
 					All Banks
 				</NavLink>
 			</List>
-			<Divider />
 			<List>
 				<NavLink
 					style={({ isActive }) =>
@@ -92,6 +102,8 @@ function Sidebar(props) {
 				sx={{
 					width: { sm: `calc(100% - ${drawerWidth}px)` },
 					ml: { sm: `${drawerWidth}px` },
+					backgroundColor: "background.paper",
+					boxShadow: "3px 6px 24px rgba(0,0,0,0.1) ",
 				}}
 			>
 				<Toolbar
@@ -115,7 +127,7 @@ function Sidebar(props) {
 					>
 						<MenuIcon />
 					</IconButton>
-					<Typography variant="h6" color="#44475b" noWrap component="div">
+					<Typography variant="h6" color="text.primary" noWrap component="div">
 						{title}
 					</Typography>
 					<IconButton sx={{ ml: 1 }} onClick={props.colorMode} color="inherit">
@@ -167,6 +179,7 @@ function Sidebar(props) {
 							display: "flex",
 							flexDirection: "row",
 							justifyContent: "center",
+							borderRight: "1px solid #26d7ab",
 							fontSize: "1.6rem",
 							gap: "2rem",
 						},
@@ -186,6 +199,7 @@ function Sidebar(props) {
 			>
 				<Toolbar />
 				<Routes>
+					<Route exact path="/" element={<Home />}></Route>
 					<Route exact path="/all-banks" element={<Banks />}></Route>
 					<Route exact path="/favorites" element={<Favourites />}></Route>
 					<Route path="/bank-details/:id" element={<BankDetails />} />

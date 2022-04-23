@@ -41,13 +41,14 @@ export default function ToggleColorMode() {
 								// palette values for light mode
 								primary: {
 									main: "#26d7ab",
+									nav: "#efefef",
 								},
 								secondary: {
 									main: "#5367FF",
 								},
 								background: {
 									default: "#ffffff",
-									paper: "#ffffff",
+									paper: "#fff",
 								},
 								divider: "#ecedef",
 								text: {
@@ -60,6 +61,7 @@ export default function ToggleColorMode() {
 								// palette values for dark mode
 								primary: {
 									main: "#26d7ab",
+									nav: "#363434",
 								},
 								secondary: {
 									main: "#5367FF",
@@ -70,10 +72,9 @@ export default function ToggleColorMode() {
 								},
 								divider: "#ecedef",
 								text: {
-									primary: "#d2d4dc",
+									primary: "#eff0f3",
 									secondary: "#c3c3cb",
 									disabled: "#777779",
-									hint: "rgba(154,151,151,0.5)",
 								},
 						  }),
 				},
