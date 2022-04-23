@@ -39,7 +39,7 @@ function Sidebar(props) {
 			setTitle("Favorites");
 		} else if (location.pathname.includes("/bank-details")) {
 			setTitle("Bank Details");
-		} else setTitle("Find your Bankk");
+		} else setTitle("Find your Bank");
 	};
 	let activeStyle = {
 		textDecoration: "underline",
@@ -52,7 +52,7 @@ function Sidebar(props) {
 			<List>
 				<NavLink
 					style={({ isActive }) =>
-						isActive ? activeStyle : { color: "#5367FF" }
+						isActive ? activeStyle : { color: "#44475b" }
 					}
 					to="/"
 					exact
@@ -63,7 +63,7 @@ function Sidebar(props) {
 			<List>
 				<NavLink
 					style={({ isActive }) =>
-						isActive ? activeStyle : { color: "#5367FF" }
+						isActive ? activeStyle : { color: "#44475b" }
 					}
 					to="/all-banks"
 					exact
@@ -74,7 +74,7 @@ function Sidebar(props) {
 			<List>
 				<NavLink
 					style={({ isActive }) =>
-						isActive ? activeStyle : { color: "#5367FF" }
+						isActive ? activeStyle : { color: "#44475b" }
 					}
 					to="/favorites"
 					exact
