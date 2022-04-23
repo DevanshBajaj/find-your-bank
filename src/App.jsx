@@ -1,45 +1,91 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import './App.css'
+import * as React from "react";
+import IconButton from "@mui/material/IconButton";
+import Box from "@mui/material/Box";
+import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+
+import Sidebar from "./components/Sidebar";
+
+const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
 
 function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
-      </header>
-    </div>
-  )
+	const theme = useTheme();
+	const colorMode = React.useContext(ColorModeContext);
+	return (
+		<>
+			<Sidebar
+				theme={theme.palette.mode}
+				colorMode={colorMode.toggleColorMode}
+			/>
+		</>
+	);
 }
 
-export default App
+export default function ToggleColorMode() {
+	const [mode, setMode] = React.useState("light");
+	const colorMode = React.useMemo(
+		() => ({
+			toggleColorMode: () => {
+				setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
+			},
+		}),
+		[]
+	);
+
+	const theme = React.useMemo(
+		() =>
+			createTheme({
+				palette: {
+					mode,
+					...(mode === "light"
+						? {
+								// palette values for light mode
+								primary: {
+									main: "#26d7ab",
+								},
+								secondary: {
+									main: "#5367FF",
+								},
+								background: {
+									default: "#ffffff",
+									paper: "#ffffff",
+								},
+								divider: "#ecedef",
+								text: {
+									primary: "#44475b",
+									secondary: "#7c7e8c",
+									disabled: "#b0b2ba",
+								},
+						  }
+						: {
+								// palette values for dark mode
+								primary: {
+									main: "#26d7ab",
+								},
+								secondary: {
+									main: "#5367FF",
+								},
+								background: {
+									default: "#191C27",
+									paper: "#1e2232",
+								},
+								divider: "#ecedef",
+								text: {
+									primary: "#d2d4dc",
+									secondary: "#c3c3cb",
+									disabled: "#777779",
+									hint: "rgba(154,151,151,0.5)",
+								},
+						  }),
+				},
+			}),
+		[mode]
+	);
+
+	return (
+		<ColorModeContext.Provider value={colorMode}>
+			<ThemeProvider theme={theme}>
+				<App />
+			</ThemeProvider>
+		</ColorModeContext.Provider>
+	);
+}
