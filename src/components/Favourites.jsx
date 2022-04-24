@@ -21,6 +21,7 @@ const Favourites = () => {
 	return (
 		<>
 			<h1>Favourites</h1>
+			<h2>Add/Remove Favorites from All Banks list</h2>
 			<Paper sx={{ width: "100%", overflow: "auto" }}>
 				<TableContainer
 					sx={{
@@ -64,6 +65,7 @@ const Favourites = () => {
 										{titles.map((column) => {
 											return (
 												<TableCell
+													sx={{ cursor: "pointer" }}
 													onClick={() => {
 														navigate(`/bank-details/${bank.ifsc}`, {
 															state: {
