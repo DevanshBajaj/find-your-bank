@@ -54,7 +54,6 @@ function Sidebar(props) {
 						isActive ? activeStyle : { color: "#c3c3cb" }
 					}
 					to="/"
-					exact
 				>
 					Home
 				</NavLink>
@@ -65,7 +64,6 @@ function Sidebar(props) {
 						isActive ? activeStyle : { color: "#c3c3cb" }
 					}
 					to="/all-banks"
-					exact
 				>
 					All Banks
 				</NavLink>
@@ -76,7 +74,6 @@ function Sidebar(props) {
 						isActive ? activeStyle : { color: "#c3c3cb" }
 					}
 					to="/favorites"
-					exact
 				>
 					Favourites{" "}
 				</NavLink>
@@ -200,9 +197,13 @@ function Sidebar(props) {
 			>
 				<Toolbar />
 				<Routes>
-					<Route exact path="/" element={<Home />}></Route>
-					<Route exact path="/all-banks" element={<Banks />}></Route>
-					<Route exact path="/favorites" element={<Favourites />}></Route>
+					<Route exact={true} path="/" element={<Home />}></Route>
+					<Route exact={true} path="/all-banks" element={<Banks />}></Route>
+					<Route
+						exact={true}
+						path="/favorites"
+						element={<Favourites />}
+					></Route>
 					<Route path="/bank-details/:id" element={<BankDetails />} />
 				</Routes>
 			</Box>

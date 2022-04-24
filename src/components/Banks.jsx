@@ -121,7 +121,6 @@ const Banks = () => {
 	const [error, setError] = useState(false);
 	const [page, setPage] = useState(0);
 	const [total, setTotal] = useState(0);
-	const [filteredPage, setFilteredPage] = useState(0);
 	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [city, setCity] = useState("MUMBAI");
 	const [category, setCategory] = useState("");
@@ -136,6 +135,7 @@ const Banks = () => {
 			setFavourite([...getArray]);
 		}
 	}, []);
+
 	const handleCity = (event) => {
 		setCity(event.target.value);
 	};
@@ -145,9 +145,6 @@ const Banks = () => {
 
 	const handleChangePage = (event, newPage) => {
 		setPage(newPage);
-	};
-	const handleFilterPage = (event, newPage) => {
-		setFilter(newPage);
 	};
 	const handleChangeRowsPerPage = (event) => {
 		setRowsPerPage(+event.target.value);
@@ -258,8 +255,12 @@ const Banks = () => {
 					onChange={handleCity}
 					helperText="Please select your city"
 				>
-					{cities.map((citydown) => {
-						return <MenuItem value={citydown}>{citydown}</MenuItem>;
+					{cities.map((citydown, idx) => {
+						return (
+							<MenuItem value={citydown} key={idx}>
+								{citydown}
+							</MenuItem>
+						);
 					})}
 				</TextField>
 				<TextField
@@ -379,6 +380,7 @@ const Banks = () => {
 														{columns.map((column) => {
 															return (
 																<TableCell
+																	key={Math.random().toString()}
 																	onClick={() => {
 																		navigate(`/bank-details/${bank.ifsc}`, {
 																			state: {
@@ -428,6 +430,7 @@ const Banks = () => {
 														{columns.map((column) => {
 															return (
 																<TableCell
+																	key={Math.random().toString()}
 																	onClick={() => {
 																		navigate(`/bank-details/${bank.ifsc}`, {
 																			state: {
@@ -476,11 +479,11 @@ const Banks = () => {
 						onPageChange={handleChangePage}
 						onRowsPerPageChange={handleChangeRowsPerPage}
 					/>
-					{filter?.length < 1 ? (
+					{filter?.length < 1 && !loading ? (
 						<caption>
 							No search data found, enter valid search query
 							<br />
-							Showing all data
+							Showing all data meanwhile
 						</caption>
 					) : (
 						<caption>Bank List</caption>
