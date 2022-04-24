@@ -41,8 +41,10 @@ function Sidebar(props) {
 		} else setTitle("Find your Bank");
 	};
 	let activeStyle = {
-		textDecoration: "underline",
-		color: "#00d09c",
+		backgroundColor: "#00d09c",
+		padding: "12px",
+		borderRadius: "12px",
+		color: "#1f2347",
 	};
 
 	const drawer = (
@@ -158,7 +160,7 @@ function Sidebar(props) {
 							display: "flex",
 							flexDirection: "row",
 							justifyContent: "center",
-							fontSize: "1.6rem",
+							fontSize: "1.2rem",
 							gap: "2rem",
 						},
 					}}

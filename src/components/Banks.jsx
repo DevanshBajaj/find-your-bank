@@ -311,7 +311,7 @@ const Banks = () => {
 					<TableContainer
 						sx={{
 							overflowX: "auto",
-							maxHeight: 600,
+							maxHeight: { sm: 500, xs: 300 },
 							"&::-webkit-scrollbar": {
 								width: 8,
 								height: 10,

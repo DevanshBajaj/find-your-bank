@@ -6,8 +6,66 @@ import {
 	TableContainer,
 	TableHead,
 	TableRow,
+	styled,
 } from "@mui/material";
+
 import { useNavigate } from "react-router-dom";
+const Root = styled(Table)`
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td,
+	th {
+		padding: 12px;
+	}
+
+	th {
+		background-color: #1e2232;
+		color: #26d7ab;
+	}
+`;
+const columns = [
+	{ id: "bank_name", label: "Bank Name", minWidth: 120 },
+	{ id: "bank_id", label: "Bank ID", minWidth: 120 },
+	{
+		id: "branch",
+		label: "Branch",
+		minWidth: 120,
+		align: "left",
+	},
+	{
+		id: "address",
+		label: "Address",
+		minWidth: 120,
+		align: "left",
+	},
+	{
+		id: "city",
+		label: "City",
+		minWidth: 120,
+		align: "left",
+	},
+	{
+		id: "ifsc",
+		label: "IFSC",
+		minWidth: 120,
+		align: "left",
+	},
+	{
+		id: "district",
+		label: "District",
+		minWidth: 120,
+		align: "left",
+	},
+	{
+		id: "state",
+		label: "State",
+		minWidth: 120,
+		align: "left",
+	},
+];
 
 const Favourites = () => {
 	let navigate = useNavigate();
@@ -25,7 +83,7 @@ const Favourites = () => {
 			<Paper sx={{ width: "100%", overflow: "auto" }}>
 				<TableContainer
 					sx={{
-						overflowX: "auto",
+						overflow: "auto",
 						maxHeight: 600,
 						"&::-webkit-scrollbar": {
 							width: 8,
@@ -47,12 +105,16 @@ const Favourites = () => {
 						},
 					}}
 				>
-					<Table stickyHeader aria-label="sticky table">
+					<Root stickyHeader aria-label="sticky table">
 						<TableHead>
 							<TableRow>
-								{titles.map((column, i) => (
-									<TableCell key={i} align="left" style={{ minWidth: 120 }}>
-										{column}
+								{columns.map((column) => (
+									<TableCell
+										key={column.id}
+										align={column.align}
+										style={{ minWidth: column.minWidth }}
+									>
+										{column.label}
 									</TableCell>
 								))}
 							</TableRow>
@@ -62,7 +124,7 @@ const Favourites = () => {
 							{favList.map((bank, i) => {
 								return (
 									<TableRow key={i} hover tabIndex={-1}>
-										{titles.map((column) => {
+										{columns.map((column) => {
 											return (
 												<TableCell
 													sx={{ cursor: "pointer" }}
@@ -81,7 +143,7 @@ const Favourites = () => {
 														});
 													}}
 												>
-													{bank[column]}
+													{bank[column.id]}
 												</TableCell>
 											);
 										})}
@@ -89,7 +151,7 @@ const Favourites = () => {
 								);
 							})}
 						</TableBody>
-					</Table>
+					</Root>
 				</TableContainer>
 			</Paper>
 		</>
