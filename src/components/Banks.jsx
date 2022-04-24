@@ -94,6 +94,7 @@ const categories = [
 	{ id: "ifsc", label: "IFSC" },
 	{ id: "branch", label: "Branch" },
 	{ id: "bank_name", label: "Bank Name" },
+	{ id: "address", label: "Address" },
 ];
 
 const Root = styled(Table)`
