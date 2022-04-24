@@ -74,7 +74,7 @@ const NavContainer = styled("div")`
 	flex-direction: row;
 	justify-content: flex-end;
 	gap: 2rem;
-	margin: 2rem;
+	margin-bottom: 2rem;
 	width: 100%;
 	@media (max-width: 620px) {
 		flex-direction: column;
