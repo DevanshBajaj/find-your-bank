@@ -1,13 +1,15 @@
 <h1 align="center">Find Your Bank</h1>
 
 <p align="center">A Single Page App to display table of all the banks in a specific city with search functionality based on various parameters/categories built with React.JS.
-</br>This was built as take home assignment for my internship interview with [Groww](https://groww.in/)</p>
+</br>This was built as take home assignment for my internship interview with <a href="https://groww.in/">Groww</a></p>
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/d48bb71b-8d75-4d54-9e46-debed9601e55/deploy-status)](https://app.netlify.com/sites/bankls/deploys)
 
 </br>
 
 ## [Live Website](https://bankls.netlify.app/)
+
+</br>
 
 ## Tech Stack and Process
 
@@ -22,7 +24,6 @@ Final step was to add favorite functionality with other improvements necessary f
 - [React](https://reactjs.org/)
 - [Material UI](https://mui.com/) is used for various UI components
 - [Emotion CSS](https://emotion.sh/docs/introduction) is used to style the UI, It is used by MUI as a styling engine
--
 
 ### Build Tool
 
