@@ -50,7 +50,7 @@ const Favourites = () => {
 						<TableHead>
 							<TableRow>
 								{titles.map((column, i) => (
-									<TableCell key={i} align="right" style={{ minWidth: 120 }}>
+									<TableCell key={i} align="left" style={{ minWidth: 120 }}>
 										{column}
 									</TableCell>
 								))}
