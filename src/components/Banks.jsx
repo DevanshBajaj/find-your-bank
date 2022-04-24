@@ -170,8 +170,8 @@ const Banks = () => {
 	};
 
 	useEffect(() => {
-		setDisableSearch(!category);
-	}, [category]);
+		setDisableSearch(!category || !city);
+	}, [category, city]);
 
 	useEffect(() => {
 		fetchData();
@@ -237,7 +237,6 @@ const Banks = () => {
 	};
 	const searchItems = (searchInput) => {
 		setSearchValue(searchInput);
-		console.log(searchValue);
 		if (searchValue !== "" && category !== "") {
 			const filteredData = banks?.response.filter((bank) =>
 				bank[category].toLowerCase().includes(searchValue.toLowerCase())
@@ -346,7 +345,7 @@ const Banks = () => {
 										))}
 									</TableRow>
 								</TableHead>
-								{searchValue.length > 1 ? (
+								{searchValue.length > 1 && filter.length > 1 ? (
 									<TableBody>
 										{filter
 											?.slice(
@@ -469,6 +468,7 @@ const Banks = () => {
 						onPageChange={handleChangePage}
 						onRowsPerPageChange={handleChangeRowsPerPage}
 					/>
+					{!error ? <span></span> : <h1>Oops error occured Please Go back</h1>}
 				</Paper>
 			</div>
 		</>

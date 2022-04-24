@@ -22,10 +22,10 @@ const Favourites = () => {
 	return (
 		<>
 			<h1>Favourites</h1>
-			<Paper sx={{ width: "100%", overflow: "scroll" }}>
+			<Paper sx={{ width: "100%", overflow: "auto" }}>
 				<TableContainer
 					sx={{
-						overflowX: "scroll",
+						overflowX: "auto",
 						maxHeight: 600,
 						"&::-webkit-scrollbar": {
 							width: 8,
