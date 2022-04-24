@@ -1,4 +1,3 @@
-import React from "react";
 import { useEffect, useState } from "react";
 import { styled } from "@mui/material/styles";
 
@@ -8,25 +7,17 @@ import {
 	TableBody,
 	TableCell,
 	TableContainer,
-	TableFooter,
 	TablePagination,
 	TableHead,
 	TableRow,
-	Select,
-	FormControl,
 	MenuItem,
-	InputLabel,
-	Autocomplete,
 	TextField,
 	InputAdornment,
-	Input,
 	Skeleton,
-	Checkbox,
 } from "@mui/material";
-import { Category, Search, TableBar } from "@mui/icons-material";
+import { Search } from "@mui/icons-material";
 import BookmarkIcon from "@mui/icons-material/Bookmark";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
-import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 
 const columns = [
@@ -128,10 +119,10 @@ const Banks = () => {
 	const [searchValue, setSearchValue] = useState("");
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState(false);
-	const [page, setPage] = React.useState(0);
+	const [page, setPage] = useState(0);
 	const [total, setTotal] = useState(0);
-	const [filteredPage, setFilteredPage] = React.useState(0);
-	const [rowsPerPage, setRowsPerPage] = React.useState(10);
+	const [filteredPage, setFilteredPage] = useState(0);
+	const [rowsPerPage, setRowsPerPage] = useState(10);
 	const [city, setCity] = useState("MUMBAI");
 	const [category, setCategory] = useState("");
 	const [disableSearch, setDisableSearch] = useState(true);
@@ -367,7 +358,9 @@ const Banks = () => {
 														hover
 														tabIndex={-1}
 														sx={{
-															"&:last-child td, &:last-child th": { border: 0 },
+															"&:last-child td, &:last-child th": {
+																border: 0,
+															},
 														}}
 													>
 														<TableCell padding="checkbox" align="center">
@@ -483,6 +476,15 @@ const Banks = () => {
 						onPageChange={handleChangePage}
 						onRowsPerPageChange={handleChangeRowsPerPage}
 					/>
+					{filter?.length < 1 ? (
+						<caption>
+							No search data found, enter valid search query
+							<br />
+							Showing all data
+						</caption>
+					) : (
+						<caption>Bank List</caption>
+					)}
 					{!error ? <span></span> : <h1>Oops error occured Please Go back</h1>}
 				</Paper>
 			</div>

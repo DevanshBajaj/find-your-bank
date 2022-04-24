@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-import { Card, CardContent, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 
 const StyledCardContent = styled("div")`

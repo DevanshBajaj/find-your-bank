@@ -3,7 +3,6 @@ import {
 	Box,
 	AppBar,
 	CssBaseline,
-	Divider,
 	Drawer,
 	IconButton,
 	List,

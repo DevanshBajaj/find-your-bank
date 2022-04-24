@@ -1,15 +1,13 @@
-import * as React from "react";
-import IconButton from "@mui/material/IconButton";
-import Box from "@mui/material/Box";
+import { useState, useMemo, createContext, useContext } from "react";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 
 import Sidebar from "./components/Sidebar";
 
-const ColorModeContext = React.createContext({ toggleColorMode: () => {} });
+const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 function App() {
 	const theme = useTheme();
-	const colorMode = React.useContext(ColorModeContext);
+	const colorMode = useContext(ColorModeContext);
 	return (
 		<>
 			<Sidebar
@@ -21,8 +19,8 @@ function App() {
 }
 
 export default function ToggleColorMode() {
-	const [mode, setMode] = React.useState("light");
-	const colorMode = React.useMemo(
+	const [mode, setMode] = useState("light");
+	const colorMode = useMemo(
 		() => ({
 			toggleColorMode: () => {
 				setMode((prevMode) => (prevMode === "light" ? "dark" : "light"));
@@ -31,7 +29,7 @@ export default function ToggleColorMode() {
 		[]
 	);
 
-	const theme = React.useMemo(
+	const theme = useMemo(
 		() =>
 			createTheme({
 				palette: {

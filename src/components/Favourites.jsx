@@ -18,7 +18,6 @@ const Favourites = () => {
 		favList[i] = JSON.parse(localStorage.getItem("favItem" + [x]) || "");
 	}
 	const titles = Object.keys(favList[0]);
-	console.log(titles);
 	return (
 		<>
 			<h1>Favourites</h1>
