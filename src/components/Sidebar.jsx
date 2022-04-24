@@ -52,7 +52,7 @@ function Sidebar(props) {
 			<List>
 				<NavLink
 					style={({ isActive }) =>
-						isActive ? activeStyle : { color: "#44475b" }
+						isActive ? activeStyle : { color: "#c3c3cb" }
 					}
 					to="/"
 					exact
@@ -63,7 +63,7 @@ function Sidebar(props) {
 			<List>
 				<NavLink
 					style={({ isActive }) =>
-						isActive ? activeStyle : { color: "#44475b" }
+						isActive ? activeStyle : { color: "#c3c3cb" }
 					}
 					to="/all-banks"
 					exact
@@ -74,7 +74,7 @@ function Sidebar(props) {
 			<List>
 				<NavLink
 					style={({ isActive }) =>
-						isActive ? activeStyle : { color: "#44475b" }
+						isActive ? activeStyle : { color: "#c3c3cb" }
 					}
 					to="/favorites"
 					exact
@@ -156,7 +156,8 @@ function Sidebar(props) {
 						display: { xs: "block", sm: "none" },
 						"& .MuiDrawer-paper": {
 							boxSizing: "border-box",
-							width: "100%",
+							backgroundColor: "#1e2232",
+							width: drawerWidth,
 							textAlign: "center",
 							display: "flex",
 							flexDirection: "row",
@@ -175,6 +176,7 @@ function Sidebar(props) {
 						"& .MuiDrawer-paper": {
 							boxSizing: "border-box",
 							width: drawerWidth,
+							backgroundColor: "#1e2232",
 							textAlign: "center",
 							display: "flex",
 							flexDirection: "row",

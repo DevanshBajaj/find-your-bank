@@ -74,7 +74,7 @@ export default function ToggleColorMode() {
 								text: {
 									primary: "#eff0f3",
 									secondary: "#c3c3cb",
-									disabled: "#777779",
+									disabled: "#bebebe",
 								},
 						  }),
 				},
