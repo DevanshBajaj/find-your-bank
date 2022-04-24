@@ -156,7 +156,7 @@ function Sidebar(props) {
 						display: { xs: "block", sm: "none" },
 						"& .MuiDrawer-paper": {
 							boxSizing: "border-box",
-							width: drawerWidth,
+							width: "100%",
 							textAlign: "center",
 							display: "flex",
 							flexDirection: "row",
@@ -194,7 +194,7 @@ function Sidebar(props) {
 				sx={{
 					flexGrow: 1,
 					p: 6,
-					width: { sm: `calc(100% - ${drawerWidth}px)` },
+					width: { sm: `calc(100% - ${drawerWidth}px)`, xs: "100%" },
 				}}
 			>
 				<Toolbar />

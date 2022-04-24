@@ -75,10 +75,10 @@ const NavContainer = styled("div")`
 	justify-content: flex-end;
 	gap: 2rem;
 	margin: 2rem;
-	@media (min-width: "600px") {
+	width: 100%;
+	@media (max-width: 620px) {
 		flex-direction: column;
-		align-items: center;
-		max-width: 50%;
+		align-items: flex-start;
 	}
 `;
 const CssTextField = styled(TextField)({
@@ -99,7 +99,11 @@ const CssTextField = styled(TextField)({
 });
 
 const cities = ["MUMBAI", "DELHI", "GHAZIABAD", "GURGAON", "NOIDA"];
-const categories = ["ifsc", "branch", "bank_name"];
+const categories = [
+	{ id: "ifsc", label: "IFSC" },
+	{ id: "branch", label: "Branch" },
+	{ id: "bank_name", label: "Bank Name" },
+];
 
 const Banks = () => {
 	const [banks, setBanks] = useState([]);
@@ -270,8 +274,8 @@ const Banks = () => {
 				>
 					{categories.map((categorydown, idx) => {
 						return (
-							<MenuItem key={idx} value={categorydown}>
-								{categorydown}
+							<MenuItem key={idx} value={categorydown.id}>
+								{categorydown.label}
 							</MenuItem>
 						);
 					})}
@@ -293,10 +297,18 @@ const Banks = () => {
 			</NavContainer>
 
 			<div>
-				<Paper sx={{ width: "100%", overflow: "scroll" }}>
+				<Paper
+					sx={{
+						width: { md: "100%", xs: "100%" },
+						overflow: "auto",
+						display: "flex",
+						flexDirection: "column",
+						justifyContent: "space-around",
+					}}
+				>
 					<TableContainer
 						sx={{
-							overflowX: "scroll",
+							overflowX: "auto",
 							maxHeight: 600,
 							"&::-webkit-scrollbar": {
 								width: 8,
@@ -344,7 +356,7 @@ const Banks = () => {
 											.map((bank, i) => {
 												return (
 													<TableRow key={i} hover tabIndex={-1}>
-														<TableCell padding="checkbox">
+														<TableCell padding="checkbox" align="center">
 															{favorite?.includes(i) ? (
 																<BookmarkIcon
 																	color="primary"
@@ -393,7 +405,7 @@ const Banks = () => {
 											.map((bank, i) => {
 												return (
 													<TableRow key={i} hover tabIndex={-1}>
-														<TableCell padding="checkbox">
+														<TableCell padding="checkbox" align="center">
 															{favorite?.includes(i) ? (
 																<BookmarkIcon
 																	color="primary"
