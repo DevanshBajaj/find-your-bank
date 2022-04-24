@@ -347,7 +347,7 @@ const Banks = () => {
 										))}
 									</TableRow>
 								</TableHead>
-								{searchValue.length > 1 && filter.length > 1 ? (
+								{searchValue.length >= 1 && filter.length >= 1 ? (
 									<TableBody>
 										{filter
 											?.slice(
