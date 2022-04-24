@@ -279,20 +279,22 @@ const Banks = () => {
 						);
 					})}
 				</TextField>
-				<CssTextField
-					id="outlined-basic"
-					label="Search"
-					variant="outlined"
-					InputProps={{
-						endAdornment: (
-							<InputAdornment position="end">
-								<Search />
-							</InputAdornment>
-						),
-					}}
-					disabled={disableSearch}
-					onChange={(e) => searchItems(e.target.value)}
-				/>
+				{!disableSearch && (
+					<CssTextField
+						id="outlined-basic"
+						label="Search"
+						variant="outlined"
+						InputProps={{
+							endAdornment: (
+								<InputAdornment position="end">
+									<Search />
+								</InputAdornment>
+							),
+						}}
+						disabled={disableSearch}
+						onChange={(e) => searchItems(e.target.value)}
+					/>
+				)}
 			</NavContainer>
 
 			<div>
@@ -380,6 +382,7 @@ const Banks = () => {
 														{columns.map((column) => {
 															return (
 																<TableCell
+																	sx={{ cursor: "pointer" }}
 																	key={Math.random().toString()}
 																	onClick={() => {
 																		navigate(`/bank-details/${bank.ifsc}`, {
@@ -430,6 +433,7 @@ const Banks = () => {
 														{columns.map((column) => {
 															return (
 																<TableCell
+																	sx={{ cursor: "pointer" }}
 																	key={Math.random().toString()}
 																	onClick={() => {
 																		navigate(`/bank-details/${bank.ifsc}`, {

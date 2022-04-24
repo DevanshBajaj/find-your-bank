@@ -64,6 +64,7 @@ const Favourites = () => {
 										{titles.map((column) => {
 											return (
 												<TableCell
+													sx={{ cursor: "pointer" }}
 													onClick={() => {
 														navigate(`/bank-details/${bank.ifsc}`, {
 															state: {
