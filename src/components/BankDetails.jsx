@@ -1,5 +1,10 @@
 import { useLocation } from "react-router-dom";
 import { Card, CardContent, Typography } from "@mui/material";
+import { styled } from "@mui/system";
+
+const StyledCardContent = styled("div")`
+	padding: 0rem;
+`;
 
 const BankDetails = () => {
 	const { state } = useLocation();
@@ -13,35 +18,55 @@ const BankDetails = () => {
 					display: "flex",
 					flexDirection: "column",
 					justifyContent: "center",
+					gap: "0.2rem",
+					padding: "1.4rem",
+					borderRadius: "12px",
+					margin: "0",
 					boxShadow: "3px 6px 24px rgba(0,0,0,0.1) ",
 				}}
 			>
-				<CardContent>
-					<Typography gutterBottom variant="h5" component="div">
+				<StyledCardContent>
+					<Typography variant="h5">Name</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
 						{name}
 					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
+				</StyledCardContent>
+				<StyledCardContent>
+					<Typography variant="h5">Bank ID:</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
 						{bank_id}
 					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
-						{branch}
-					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
+				</StyledCardContent>
+				<StyledCardContent>
+					<Typography variant="h5">IFSC:</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
 						{ifsc}
 					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
+				</StyledCardContent>
+				<StyledCardContent>
+					<Typography variant="h5">Branch:</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
+						{branch}
+					</Typography>
+				</StyledCardContent>
+				<StyledCardContent>
+					<Typography variant="h5">District:</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
 						{district}
 					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
-						{city}
-					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
-						{bank_state}
-					</Typography>
-					<Typography gutterBottom variant="h6" component="div">
+				</StyledCardContent>
+				<StyledCardContent>
+					<Typography variant="h5">Address:</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
 						{address}
 					</Typography>
-				</CardContent>
+				</StyledCardContent>
+				<StyledCardContent>
+					<Typography variant="h5">State:</Typography>
+					<Typography gutterBottom variant="h6" color="text.secondary">
+						{bank_state}
+					</Typography>
+				</StyledCardContent>
 			</Card>
 		</>
 	);

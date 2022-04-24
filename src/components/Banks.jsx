@@ -105,6 +105,23 @@ const categories = [
 	{ id: "bank_name", label: "Bank Name" },
 ];
 
+const Root = styled(Table)`
+	table {
+		border-collapse: collapse;
+		width: 100%;
+	}
+
+	td,
+	th {
+		padding: 12px;
+	}
+
+	th {
+		background-color: #1e2232;
+		color: #26d7ab;
+	}
+`;
+
 const Banks = () => {
 	const [banks, setBanks] = useState([]);
 	const [filter, setFilter] = useState([]);
@@ -126,7 +143,6 @@ const Banks = () => {
 	useEffect(() => {
 		if (getArray !== 0) {
 			setFavourite([...getArray]);
-			console.log(getArray);
 		}
 	}, []);
 	const handleCity = (event) => {
@@ -214,10 +230,6 @@ const Banks = () => {
 				setFilter(localdata);
 				console.log("cache");
 			}
-			// let filteredBanks = banks?.response
-			// 	.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-			// 	.filter((bank) => bank[category]?.toLowerCase().includes("abh"));
-			// console.log(filteredBanks);
 			setLoading(false);
 		} catch (e) {
 			setError(true);
@@ -228,11 +240,8 @@ const Banks = () => {
 	const totalPages = () => {
 		if (filter?.length > 1) {
 			setTotal(filter?.length);
-			console.log("de");
 		} else {
 			setTotal(banks?.response?.length);
-			console.log("banks");
-			console.log(total);
 		}
 	};
 	const searchItems = (searchInput) => {
@@ -242,7 +251,6 @@ const Banks = () => {
 				bank[category].toLowerCase().includes(searchValue.toLowerCase())
 			);
 			setFilter(filteredData);
-			console.log(filter);
 		} else {
 			setFilter(banks);
 		}
@@ -330,7 +338,7 @@ const Banks = () => {
 						}}
 					>
 						{!loading && banks ? (
-							<Table stickyHeader aria-label="sticky table">
+							<Root stickyHeader aria-label="sticky table">
 								<TableHead>
 									<TableRow>
 										<TableCell>Favorites</TableCell>
@@ -354,7 +362,14 @@ const Banks = () => {
 											)
 											.map((bank, i) => {
 												return (
-													<TableRow key={i} hover tabIndex={-1}>
+													<TableRow
+														key={i}
+														hover
+														tabIndex={-1}
+														sx={{
+															"&:last-child td, &:last-child th": { border: 0 },
+														}}
+													>
 														<TableCell padding="checkbox" align="center">
 															{favorite?.includes(i) ? (
 																<BookmarkIcon
@@ -444,7 +459,7 @@ const Banks = () => {
 											})}
 									</TableBody>
 								)}
-							</Table>
+							</Root>
 						) : (
 							<div style={{ margin: "2rem" }}>
 								<Skeleton animation="wave" sx={{ maxWidth: "100%" }} />
